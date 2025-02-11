@@ -6,12 +6,9 @@ A fun word game application built with React, TypeScript, and Vite.
 
 This app is designed to make road trips more entertaining by providing word-based games and challenges that passengers can play together.
 
-## Features
+## How to play
 
-- [In Progress] Interactive word games
-- [In Progress] Multiplayer support
-- [In Progress] Score tracking
-- [In Progress] Family-friendly content
+Open the game in a browser, choose the length of your round, and click the button next to start game to randomly select a subject and a letter.  Click start game and shout out as many things that match the subject and start with the letter as you can in the time.  Each time you get one, click on the subject or letter to add to your score
 
 ## Tech Stack
 
