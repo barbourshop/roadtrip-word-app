@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { Timer } from './components/Timer';
 import { GameState, SUBJECTS, LETTERS, TIME_OPTIONS } from './types';
 import { PlayIcon, StopIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
+import { useNoSleep } from './hooks/useNoSleep';
 
 function App() {
   const [gameState, setGameState] = useState<GameState>({
@@ -14,7 +15,10 @@ function App() {
     showSummary: false,
   });
 
-  const startGame = useCallback(() => {
+  const { isEnabled, enable, disable } = useNoSleep();
+
+  const startGame = useCallback(async () => {
+    await enable();
     setGameState(prev => ({
       ...prev,
       isPlaying: true,
@@ -22,15 +26,16 @@ function App() {
       score: 0,
       showSummary: false,
     }));
-  }, []);
+  }, [enable]);
 
   const stopGame = useCallback(() => {
+    disable();
     setGameState(prev => ({
       ...prev,
       isPlaying: false,
       showSummary: true,
     }));
-  }, []);
+  }, [disable]);
 
   const resetGame = useCallback(() => {
     setGameState(prev => ({
@@ -76,7 +81,7 @@ function App() {
 
   if (gameState.showSummary) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-500 to-purple-600 text-white p-4">
+      <div className="min-h-screen bg-gradient-to-b from-purple-500 to-green-500 text-white p-4">
         <div className="max-w-md mx-auto space-y-8 pt-8">
           <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm text-center space-y-6">
             <p className="text-7xl font-bold">{gameState.score}</p>
@@ -97,7 +102,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-500 to-purple-600 text-white p-4">
+    <div className="min-h-screen bg-gradient-to-b from-purple-500 to-green-500 text-white p-4">
       <div className="max-w-md mx-auto space-y-8 pt-8">
         <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
           {gameState.isPlaying ? (
